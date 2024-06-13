@@ -1,0 +1,302 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  background-color: #9F84BD;
+}
+
+.main-container {
+  height: 80vh;
+  width: 60%;
+  border-radius: 4%;
+  background-color:#C09BD8;
+}
+
+.main-container > .add-task {
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  top: 1%;
+  left: 70%;
+  height: 10%;
+  width: 10%;
+  border-radius: 10%;
+  padding: 1%;
+  text-wrap:nowrap;
+}
+
+#add-task-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 50%;
+    border-radius: 20%;
+    margin: 10%;
+    cursor: pointer;
+    background-color: #9F84BD;
+}
+#add-task{
+    color: white;
+    font-size:  20px;
+}
+
+#edit-icon{
+    width: 25; /* Ensure image doesn't exceed the width of its container */
+    height: 20px; 
+    object-fit:contain ;
+    cursor: pointer;
+}
+
+#view-icon{
+    width: 30px; /* Ensure image doesn't exceed the width of its container */
+    height: 20px; 
+    object-fit:contain ;
+    cursor: pointer;
+}
+
+
+.main-container > .task-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  left: 4%;
+  width: 90%;
+  background-color: #EBC3DB;
+}
+
+.task-list > .task-item {
+  display: flex;
+  position: relative;
+  left: 5%;
+  align-items: center;
+  width: 93%;
+  margin: 1%;
+  background-color: #EDE3E9;
+  /* background-color:#E6E4CE; */
+}
+
+.task-item > .edit-button {
+  position: relative;
+  left: 90%;
+  height: 8%;
+  background-color: #E6E4CE;
+}
+
+.task-item > .view-button {
+  position: relative;
+  left: 76%;
+  height: 8%;
+  text-align: center;
+  padding: 1px;
+  background-color: #E6E4CE;
+}
+
+.task-item > .task-body {
+  display: flex;
+  position: relative;
+  right: 17%;
+  overflow:hidden ;
+
+  
+}
+
+.task-item > .check-box {
+  position: relative;
+  right: 18%;
+  cursor: pointer;
+}
+
+.task-item > .task-time {
+  display: flex;
+  position: relative;
+  right: 15%;
+  font-size: 70%;
+}
+
+.task-item > .priority {
+  position: relative;
+  right: 13%;
+  background-color: coral;
+  font-size: 70%;
+}
+
+.pop-up-modal{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+   top:17%;
+   width: 50%;
+   height: 75%;
+    background-color: #EBC3DB;
+}
+
+.pop-up-modal > .modal-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75%;
+    width: 75%;
+    top: 10%;
+    left: 12%;
+    background-color: #EDE3E9;
+}
+
+.modal-content > .close{
+   position: relative;
+   bottom: 1%;
+   right: 46%;
+   width: 2%;
+   height: 4%;
+   font-size: 150%;
+   font-weight:bolder;
+   cursor:pointer;
+} 
+
+.modal-content > .task-details{
+    width: 85%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    margin: 1%;
+    resize: none;
+}
+
+.modal-content > .tags{
+    width: 85%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+
+}
+
+.modal-content >#save-task{
+     background-color: #E6E4CE;
+}
+
+.priority-fldset{
+    background-color: #E6E4CE;
+}
+
+.edit-pop-up{
+    position: absolute;
+    top:20%;
+    height: 70%;
+    width: 48%;
+    border-radius: 2%;
+    background-color: #EBC3DB;
+}
+
+.edit-pop-up >.modal-content > .close-edit{
+    position: relative;
+    bottom: 1%;
+    left: 2%;
+    width: 2%;
+    height: 4%;
+    font-size: 160%;
+    font-weight:bolder;
+    cursor:pointer;
+}
+
+.edit-pop-up > .modal-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-pop-up > .modal-content > .task-body{
+    position: relative;
+    width: 85%;
+    height: 300px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    margin: 1%;
+    left: 6%;
+    resize: none;
+}
+
+.edit-pop-up > .modal-content >.save-editted-task{
+    
+    position: absolute;
+    top: 85%;
+    left: 33%;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 500px;
+    transition-property: background-color,border-color,color,box-shadow,filter;
+    transition-duration: .3s;
+    border: 1px solid transparent;
+    letter-spacing: 2px;
+    min-width: 160px;
+    text-transform: uppercase;
+    white-space: normal;
+    font-weight: 700;
+    text-align: center;
+    padding: 16px 14px 18px;
+    color: black;
+    background-color: #15883e;
+    width: 2%;
+    height: 48px;
+
+    background-color: #EDE3E9;
+}
+
+.view-pop-up > .modal-content{
+
+   position: absolute;
+   display: flex;
+    height: 50%;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+    background-color: #EBC3DB;
+}
+
+.view-pop-up > .modal-content >.task-body{
+    position: relative;
+    top: 2%;
+    left: 2%;
+    height: 90%;
+    width: 90%;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    margin: 1%;
+    background-color: #EDE3E9;
+    resize: none;
+}
+
+.view-pop-up > .modal-content > .close-view{
+    position: relative;
+    bottom: 1%;
+    left: 2%;
+    width: 2%;
+    height: 4%;
+    font-size: 160%;
+    font-weight:bolder;
+    cursor:pointer;
+}

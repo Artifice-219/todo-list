@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div class="main-container">
+        <div class="add-task">
+            <button id="add-task-button">
+                <span class="material-symbols-outlined" id="add-task">add</span>
+            </button>
+            <p>New Task</p>
+        </div>
+        <div class="task-list">
+            <!-- Example task item -->
+            <div class="task-item">
+                <button class="edit-button">
+                    <img src="assets/icons8-edit-50.png" alt="edit icon" id="edit-icon">
+                </button>
+                <button class="view-button">
+                    <img src="assets/icons8-eye-24.png" alt="view icon" id="view-icon">
+                </button>
+                <input type="checkbox" class="check-box" name="check-box" id="check-box" />
+                <p class="task-body">Code the World, Sample Task</p>
+                <span class="task-time">replace na this</span>
+                <span class="priority">high</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="pop-up" class="pop-up-modal" style="display: none">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <textarea class="task-details" id="task-details"></textarea>
+            <textarea class="tags" id="tags"></textarea>
+            <form action="">
+                <div class="priority-btn">
+                    <fieldset class="priority-fldset">
+                        <legend>Priority</legend>
+                        <label for="high">HIGH</label>
+                        <input type="radio" name="priority-btn" id="high" value="high" />
+                        <label for="mid">MEDIUM</label>
+                        <input type="radio" name="priority-btn" id="mid" value="medium" />
+                        <label for="low">LOW</label>
+                        <input type="radio" name="priority-btn" id="low" value="low" />
+                    </fieldset>
+                </div>
+            </form>
+            <button id="save-task">Add</button>
+        </div>
+    </div>
+
+    <div class="edit-pop-up" style="display: none">
+        <div class="modal-content">
+            <span class="close-edit">&times;</span>
+            <textarea name="task-body" class="task-body" id="edit-task-body"></textarea>
+            <button class="save-editted-task">Save changes</button>
+        </div>
+    </div>
+
+    <div class="view-pop-up" style="display: none">
+        <div class="modal-content">
+            <span class="close-view">&times;</span>
+            <textarea name="task-body" class="task-body" id="view-task-body" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const toggleModal = (show) => {
+                $("#pop-up").css("display", show ? "block" : "none");
+                if (!show) {
+                    $("#task-details").val("");
+                    $("#tags").val("#sample tags");
+                    $('input[name="priority-btn"]').prop("checked", false);
+                }
+            };
+
+            const toggleEditModal = (show) => {
+                $(".edit-pop-up").css("display", show ? "block" : "none");
+                if (!show) {
+                    $("#edit-task-body").val("");
+                }
+            };
+
+            const toggleViewModal = (show, taskDetails = "") => {
+                $(".view-pop-up").css("display", show ? "block" : "none");
+                if (show) {
+                    $("#view-task-body").val(taskDetails);
+                } else {
+                    $("#view-task-body").val("");
+                }
+            };
+
+            $("#add-task-button").click(function () {
+                toggleModal(true);
+            });
+
+            $(".close").click(function () {
+                toggleModal(false);
+            });
+
+            $(".close-edit").click(function () {
+                toggleEditModal(false);
+            });
+
+            $(".close-view").click(function () {
+                toggleViewModal(false);
+            });
+
+            $("#save-task").click(function () {
+                const time = new Date().toLocaleTimeString();
+                let taskDetails = $("#task-details").val().trim();
+                const priority = $('input[name="priority-btn"]:checked').val();
+                let taskTag = $("#tags").val().trim();
+
+                if (taskDetails && priority) {
+                    const taskHTML = `
+                        <div class="task-item">
+                            <button class="edit-button">
+                                <img  src="assets/icons8-edit-50.png" alt="edit icon" id="edit-icon">
+                            </button>
+                            <button class="view-button">
+                               <img  src="assets/icons8-eye-24.png" alt="view icon" id="view-icon">
+                            </button>
+                            <input type="checkbox" class="check-box" name="check-box" id="check-box">
+                            <p class="task-body">${taskDetails}</p>
+                            <span class="task-time">${time}</span>
+                            <span class="priority">${priority}</span>
+                            <span class="tags">${taskTag}</span>
+                        </div>`;
+                    $(".task-list").prepend(taskHTML);
+                    toggleModal(false);
+                } else {
+                    alert("Task details and priority must be filled out");
+                }
+            });
+
+            $(document).on("change", ".check-box", function () {
+                if (this.checked) {
+                    $(this).closest(".task-item").remove();
+                }
+            });
+
+            $(document).on("click", ".edit-button", function () {
+                let taskItem = $(this).closest(".task-item");
+                let currentTaskDetails = taskItem.find(".task-body").text().trim();
+                $("#edit-task-body").val(currentTaskDetails);
+                $(".edit-pop-up").data("taskItem", taskItem);
+                toggleEditModal(true);
+            });
+
+            $(document).on("click", ".save-editted-task", function () {
+                let newDetails = $("#edit-task-body").val().trim();
+                if (newDetails) {
+                    let taskItem = $(".edit-pop-up").data("taskItem");
+                    taskItem.find(".task-body").text(newDetails);
+                    toggleEditModal(false);
+                } else {
+                    alert("Task details cannot be empty");
+                }
+            });
+
+            $(document).on('click', '.view-button', function(){
+                let taskItem = $(this).closest(".task-item");
+                let currentTaskDetails = taskItem.find(".task-body").text().trim();
+                toggleViewModal(true, currentTaskDetails);
+            });
+        });
+    </script>
+</body>
+</html>
